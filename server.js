@@ -1,41 +1,65 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const mongoose = require('mongoose');
+
+dotenv.config();
+
+const authRoutes = require('./routes/auth');
+const aiRoutes = require('./routes/api');
+const paymentRoutes = require('./routes/payments');
+const schedulingRoutes = require('./routes/scheduling');
+const webhookRoutes = require('./routes/webhook');
+const errorHandler = require('./middleware/errorhandler');
 
 const app = express();
 
 app.use(cors());
+
+// Stripe webhook route must come before express.json()
+app.use('/api/webhook/stripe', webhookRoutes);
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-res.send("API is running");
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/api/auth', authRoutes);
+app.use('/api/ai', aiRoutes);
+app.use('/api/payments', paymentRoutes);
+app.use('/api/scheduling', schedulingRoutes);
+
+app.get('/', (req, res) => {
+res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Create Stripe Checkout Session
-app.post("/api/stripe/create-checkout-session", async (req, res) => {
-try {
-const session = await stripe.checkout.sessions.create({
-payment_method_types: ["card"],
-mode: "subscription",
-line_items: [
-{
-price: process.env.STRIPE_PRICE_BASIC,
-quantity: 1,
-},
-],
-success_url: `${process.env.CLIENT_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-cancel_url: `${process.env.CLIENT_URL}/cancel`,
+app.get('/login', (req, res) => {
+res.sendFile(path.join(__dirname, 'public', 'pages', 'login.html'));
 });
 
-res.status(200).json({ url: session.url });
-} catch (error) {
-console.error("Stripe checkout error:", error.message);
-res.status(500).json({ error: "Failed to create checkout session" });
-}
+app.get('/signup', (req, res) => {
+res.sendFile(path.join(__dirname, 'public', 'pages', 'signup.html'));
 });
+
+app.get('/pricing', (req, res) => {
+res.sendFile(path.join(__dirname, 'public', 'pages', 'pricing.html'));
+});
+
+app.get('/dashboard', (req, res) => {
+res.sendFile(path.join(__dirname, 'public', 'pages', 'dashboard.html'));
+});
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-console.log(`Server running on port ${PORT}`);
+
+mongoose
+.connect(process.env.MONGODB_URI)
+.then(() => {
+console.log('MongoDB connected');
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+})
+.catch((error) => {
+console.error('MongoDB connection error:', error.message);
 });

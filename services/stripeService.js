@@ -2,24 +2,21 @@ const Stripe = require("stripe");
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-exports.createCheckoutSession = async () => {
+async function createCheckoutSession(priceId, email) {
+const session = await stripe.checkout.sessions.create({
+mode: "subscription",
+line_items: [
+{
+price: priceId,
+quantity: 1
+}
+],
+customer_email: email,
+success_url: `${process.env.BASE_URL}/pages/dashboard.html`,
+cancel_url: `${process.env.BASE_URL}/pages/pricing.html`
+});
 
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    mode: "payment",
-    line_items: [
-      {
-        price_data: {
-          currency: "usd",
-          product_data: { name: "AI SaaS Subscription" },
-          unit_amount: 2000
-        },
-        quantity: 1
-      }
-    ],
-    success_url: "http://localhost:3000/success",
-    cancel_url: "http://localhost:3000/cancel"
-  });
+return session;
+}
 
-  return session;
-};
+module.exports = { createCheckoutSession };

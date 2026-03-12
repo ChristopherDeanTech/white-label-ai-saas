@@ -1,11 +1,8 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const aiController = require("../controllers/aiController");
+const authMiddleware = require('../middleware/authmiddleware');
+const { askAI } = require('../controllers/aicontroller');
 
-router.get("/", (req, res) => {
-  res.json({ message: "API is running" });
-});
-
-router.post("/ai", aiController.generateAI);
+router.post('/ask', authMiddleware, askAI);
 
 module.exports = router;

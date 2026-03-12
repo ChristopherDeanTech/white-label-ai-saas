@@ -1,13 +1,15 @@
-const mongoose = require("mongoose");
+const User = require("../models/user");
 
-const connectDB = async () => {
-try {
-await mongoose.connect(process.env.MONGO_URI);
-console.log("MongoDB connected");
-} catch (error) {
-console.error("MongoDB connection error:", error.message);
-process.exit(1);
+async function createUser(data) {
+const user = new User(data);
+return await user.save();
 }
-};
 
-module.exports = connectDB;
+async function findUserByEmail(email) {
+return await User.findOne({ email });
+}
+
+module.exports = {
+createUser,
+findUserByEmail
+};

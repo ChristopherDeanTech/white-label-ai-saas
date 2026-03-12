@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard</title>
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<header class="navbar">
+<div class="logo-wrap">
+<img src="/assets/images/logo.png" alt="Logo" class="logo" />
+<span>Dashboard</span>
+</div>
+
+<nav>
+<a href="/">Home</a>
+<a href="/pricing">Pricing</a>
+<a href="#" id="logoutBtn" class="btn-primary">Logout</a>
+</nav>
+</header>
+
+<main class="dashboard">
+<h1>Welcome Back</h1>
+<p id="userInfo">Loading profile...</p>
+
+<div class="dashboard-grid">
+<div class="dashboard-card">
+<h3>Subscription</h3>
+<p id="subscriptionStatus">Checking...</p>
+<button id="checkoutBtn" class="btn-primary">Upgrade Plan</button>
+</div>
+
+<div class="dashboard-card">
+<h3>Book Appointment</h3>
+<p>Access your Calendly booking page below.</p>
+<a href="#" id="bookingLink" class="btn-secondary" target="_blank">Open Calendly</a>
+</div>
+
+<div class="dashboard-card">
+<h3>AI Assistant</h3>
+<textarea id="promptInput" placeholder="Ask AI something..."></textarea>
+<button id="askAiBtn" class="btn-primary">Ask AI</button>
+<p id="aiResponse"></p>
+</div>
+
+<div class="dashboard-card">
+<h3>Stats</h3>
+<p>Users: 120</p>
+<p>Bookings: 48</p>
+<p>Revenue: $2,400</p>
+</div>
+</div>
+</main>
+
+<script src="/js/dashboard.js"></script>
+</body>
+</html>
