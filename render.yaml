@@ -1,0 +1,24 @@
+services:
+- type: web
+name: cdean-ai-site
+runtime: node
+plan: starter
+buildCommand: npm install
+startCommand: npm start
+envVars:
+- key: NODE_VERSION
+value: 22.22.0
+- key: CLIENT_URL
+sync: false
+- key: STRIPE_SECRET_KEY
+sync: false
+- key: STRIPE_PUBLISHABLE_KEY
+sync: false
+- key: STRIPE_WEBHOOK_SECRET
+sync: false
+- key: STRIPE_PRICE_BASIC
+sync: false
+- key: STRIPE_PRICE_PRO
+sync: false
+- key: STRIPE_PRICE_AGENCY
+sync: false

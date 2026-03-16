@@ -3,14 +3,50 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Payment Success</title>
+<title>Subscription Successful</title>
 <link rel="stylesheet" href="/css/style.css" />
 </head>
-<body class="form-page">
-<div class="form-box">
-<h2>Payment Successful</h2>
-<p>Your subscription was activated.</p>
-<a href="/dashboard" class="btn-primary">Go to Dashboard</a>
+<body>
+<section class="section">
+<div class="container" style="text-align:center; padding-top:60px;">
+<h1 class="section-title">Payment Successful</h1>
+<p class="contact-text" id="statusText">Finalizing your access...</p>
+<a href="/" class="btn btn-secondary">Back Home</a>
 </div>
+</section>
+
+<script>
+(async function () {
+const statusText = document.getElementById('statusText');
+const params = new URLSearchParams(window.location.search);
+const sessionId = params.get('session_id');
+
+if (!sessionId) {
+statusText.textContent = 'Missing session ID.';
+return;
+}
+
+try {
+const res = await fetch(`/api/payments/checkout-session?session_id=${encodeURIComponent(sessionId)}`);
+const data = await res.json();
+
+if (!res.ok) throw new Error(data.error || 'Unable to load checkout session');
+
+if (data.email) {
+localStorage.setItem('customerEmail', data.email);
+}
+localStorage.setItem('customerPlan', data.plan);
+
+statusText.textContent = `Subscription confirmed for ${data.plan.toUpperCase()}. Redirecting to your dashboard...`;
+
+setTimeout(() => {
+window.location.href = `/dashboard/${data.plan}.html`;
+}, 1200);
+} catch (err) {
+console.error(err);
+statusText.textContent = err.message || 'Could not finalize dashboard access.';
+}
+})();
+</script>
 </body>
 </html>
