@@ -1,15 +1,30 @@
 {
 "name": "ai-saas-website",
 "version": "1.0.0",
-"description": "White label AI SaaS website with Stripe subscriptions",
+"description": "White label AI SaaS website with Stripe subscriptions and HubSpot CRM integration",
 "main": "server.js",
+"type": "commonjs",
 "scripts": {
 "start": "node server.js",
-"dev": "node server.js"
+"dev": "nodemon server.js"
 },
+"keywords": [
+"ai",
+"saas",
+"stripe",
+"hubspot",
+"crm",
+"express"
+],
+"author": "",
+"license": "ISC",
 "dependencies": {
+"cors": "^2.8.5",
 "dotenv": "^16.4.5",
 "express": "^4.21.2",
 "stripe": "^18.0.0"
+},
+"devDependencies": {
+"nodemon": "^3.1.4"
 }
 }
