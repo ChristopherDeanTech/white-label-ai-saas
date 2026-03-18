@@ -3,79 +3,90 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Contact Us</title>
+<title>Contact Us | C. DEAN AI</title>
 <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-<header class="site-header">
-<nav class="nav container">
-<a href="/" class="brand">Your Brand</a>
-<div class="nav-links">
+
+<header class="header">
+<div class="container nav">
+<a href="/" class="brand">
+<img src="/assets/logo.png" alt="C. DEAN AI logo" class="logo" />
+<span class="brand-name">C. DEAN AI</span>
+</a>
+
+<nav class="nav-links">
 <a href="/">Home</a>
 <a href="/contact">Contact</a>
-</div>
 </nav>
+</div>
 </header>
 
-<main class="section">
-<div class="container" style="max-width: 900px;">
-<div class="cta-box">
-<p class="eyebrow">Contact Us</p>
-<h1 class="section-title">Let’s talk about your project</h1>
-<p class="section-subtitle">
+<main class="contact-page">
+<section class="section">
+<div class="container contact-shell">
+<div class="contact-card">
+<div class="contact-intro">
+<p class="eyebrow">PROJECT FORM</p>
+<h1 class="contact-title">Let’s talk about your project</h1>
+<p class="contact-subtitle">
 Fill out the form below and your information will be sent to our HubSpot CRM.
 </p>
+</div>
 
-<form id="hubspotLeadForm" class="contact-form mt-3">
-<div class="grid grid-2">
-<div>
+<form id="hubspotLeadForm" class="contact-form">
+<div class="form-grid">
+<div class="form-group">
 <label for="firstname">First Name</label>
 <input type="text" id="firstname" name="firstname" required />
 </div>
 
-<div>
+<div class="form-group">
 <label for="lastname">Last Name</label>
 <input type="text" id="lastname" name="lastname" required />
 </div>
 </div>
 
-<div class="grid grid-2 mt-2">
-<div>
+<div class="form-grid">
+<div class="form-group">
 <label for="email">Email</label>
 <input type="email" id="email" name="email" required />
 </div>
 
-<div>
+<div class="form-group">
 <label for="phone">Phone</label>
 <input type="text" id="phone" name="phone" />
 </div>
 </div>
 
-<div class="grid grid-2 mt-2">
-<div>
+<div class="form-grid">
+<div class="form-group">
 <label for="company">Company</label>
 <input type="text" id="company" name="company" />
 </div>
 
-<div>
+<div class="form-group">
 <label for="website">Website</label>
 <input type="text" id="website" name="website" />
 </div>
 </div>
 
-<div class="mt-2">
-<label for="message">Message</label>
-<textarea id="message" name="message" placeholder="Tell us what you need..."></textarea>
+<div class="form-group">
+<label for="message">Project Details</label>
+<textarea
+id="message"
+name="message"
+rows="6"
+placeholder="Tell us what you need, what type of business you have, and what you want help building..."
+></textarea>
 </div>
 
-<div class="mt-3">
-<button type="submit" class="btn btn-primary">Send Message</button>
-</div>
-
-<p id="formStatus" class="mt-2"></p>
+<button type="submit" class="btn primary form-submit">Send Project Inquiry</button>
+<p id="formStatus" class="form-status"></p>
 </form>
 </div>
 </div>
+</section>
 </main>
 
 <script src="/js/hubspot-form.js"></script>
